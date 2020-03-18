@@ -15,7 +15,7 @@ import sys
 # Debug
 # from pdb import set_trace as st
 
-VERSION = '%(prog)s 1.0.0'
+VERSION = '%(prog)s 1.0.1'
 HEADER = '\033[95m'
 OKBLUE = '\033[94m'
 OKGREEN = '\033[92m'
@@ -132,10 +132,12 @@ def display_content(content):
                 iscode = False
             elif value.startswith('```'):
                 iscode = not iscode
+            elif iscode and value.startswith('#'):
+                print(value[:-1])
             elif iscode:
                 print(HEADER+value[:-1]+ENDC)
             else:
-                print(OKGREEN+value[:-1]+ENDC)
+                print(BOLD+value[:-1]+ENDC)
     return exit_code
 
 def main(params):
