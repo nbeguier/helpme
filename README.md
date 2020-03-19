@@ -8,6 +8,8 @@ Create a markdown file.
 
   - Add `@tags` below a title to add tags
 
+  - Add `@description` below a title to add colorful description
+
 See tips_example.md for more information.
 
 ## Usage
