@@ -15,7 +15,7 @@ import sys
 # Debug
 # from pdb import set_trace as st
 
-VERSION = '%(prog)s 1.1.0'
+VERSION = '%(prog)s 1.1.1'
 HEADER = '\033[95m'
 OKBLUE = '\033[94m'
 OKGREEN = '\033[92m'
@@ -182,8 +182,8 @@ if __name__ == '__main__':
     if ARGS.command[0] == 'add':
         add_tips_files(ARGS.command, ARGS.verbose)
         sys.exit(0)
-    elif ARGS.command[0] == 'help':
-        print('HELP')
+    elif ARGS.command[0] in ['help', 'please']:
+        PARSER.print_help()
         sys.exit(0)
 
     main(PARAMS)
