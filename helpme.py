@@ -15,7 +15,7 @@ import sys
 # Debug
 # from pdb import set_trace as st
 
-VERSION = '%(prog)s 1.0.1'
+VERSION = '%(prog)s 1.1.0'
 HEADER = '\033[95m'
 OKBLUE = '\033[94m'
 OKGREEN = '\033[92m'
@@ -105,7 +105,7 @@ def get_content(params, tips_file):
                 current_title = get_title(line_1)
                 content[current_title] = list()
                 reading = True
-            elif line.startswith('## '):
+            elif line.replace('\xa0', ' ').startswith('## '):
                 reading = False
             elif reading:
                 content[current_title].append(line)
@@ -113,47 +113,58 @@ def get_content(params, tips_file):
 
     return content
 
+def color_code(line):
+    """
+    Print the line like bash color
+    """
+    if line.replace('\xa0', ' ').startswith('$ '):
+        prefix = HEADER+'$ '
+        line = line[2:]
+        command = line.split()[0]
+        args = ''
+        if len(line.split()) > 1:
+            args = ' '.join(line.split()[1:])
+        print(prefix+OKGREEN+command+' '+OKBLUE+args+ENDC)
+    else:
+        print(line)
+
 def display_content(content):
     """
     Pretty display the content
     """
-    exit_code = 42
     if len(content.keys()) <= 1:
-        return exit_code
+        return
     iscode = False
     for key in content:
         if key == 'command':
             continue
-        exit_code = 0
         print(BOLD+UNDERLINE+'## '+key+ENDC)
         for value in content[key]:
             if value.startswith('##'):
                 print(BOLD+UNDERLINE+value[:-1]+ENDC)
                 iscode = False
+            elif value.startswith('@description: '):
+                print(WARNING+value[:-1].replace('@description: ', '')+ENDC)
             elif value.startswith('```'):
                 iscode = not iscode
             elif iscode and value.startswith('#'):
-                print(value[:-1])
+                print(BOLD+value[:-1]+ENDC)
             elif iscode:
-                print(HEADER+value[:-1]+ENDC)
+                color_code(value[:-1])
             else:
                 print(BOLD+value[:-1]+ENDC)
-    return exit_code
+    return
 
 def main(params):
     """
     Main function
     """
     tips_files = load_tips_files(params['verbose'])
-    exit_code = 42
     for tips_file in tips_files:
         if not os.path.exists(tips_file):
             continue
         content = get_content(params, tips_file)
-        exit_code = display_content(content)
-        if exit_code == 0:
-            return 0
-    return exit_code
+        display_content(content)
 
 if __name__ == '__main__':
     PARSER = ArgumentParser()
@@ -175,4 +186,4 @@ if __name__ == '__main__':
         print('HELP')
         sys.exit(0)
 
-    sys.exit(main(PARAMS))
+    main(PARAMS)
