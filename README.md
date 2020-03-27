@@ -1,5 +1,9 @@
 # Help me !
 
+[![Build Status](https://travis-ci.org/nbeguier/helpme.svg?branch=master)](https://travis-ci.org/nbeguier/helpme) [![Python 3.4|3.8](https://img.shields.io/badge/python-3.4|3.8-green.svg)](https://www.python.org/) [![License](https://img.shields.io/github/license/nbeguier/helpme?color=blue)](https://github.com/nbeguier/helpme/blob/master/LICENSE)
+
+Shortcut to display help about custom notes written in markdown
+
 ## Prerequisites
 
 Create a markdown file.
