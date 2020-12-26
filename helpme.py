@@ -3,7 +3,7 @@
 Help me
 
 MIT License
-Copyright (c) 2020 Nicolas Béguier
+Copyright (c) 2020-2021 Nicolas Béguier
 Written by Nicolas BEGUIER (nicolas_beguier@hotmail.com)
 """
 
